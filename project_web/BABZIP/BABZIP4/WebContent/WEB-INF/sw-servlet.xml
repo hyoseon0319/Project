@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<context:component-scan base-package="controller" />
+
+	<!-- id값을 이 해당 스프링 객체를 사용하는 내부 로직이 
+	viewResolver라는 이름으로 객체를 검색해서 사용
+	따라서 개발자들은 대소문자 맞춰서 작성 -->
+	<bean id="viewResolver" 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <!--  jsp는 WEB-INF/jsp/하위에 개발, 자바소스 상에서는
+	    	경로와 확장자 없이 file명만으로 jsp 사용 및 호출 가능  -->
+	    <property name="prefix" value="../../BABZIP/marble/"/>
+	    <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
+
+
+
+
+
