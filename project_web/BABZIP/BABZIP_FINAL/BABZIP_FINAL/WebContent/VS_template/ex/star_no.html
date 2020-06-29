@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+
+</head>
+
+
+<div id="example">
+    <h3>별점 기준 검색 ( 1~5 )</h3>
+    <p>리뷰검색 :
+        <input type="text" v-model="star" placeholder="별점을 입력하세요.">
+    </p>
+    <table id="list">
+        <thead>
+            <tr>
+                <th>작성자 번호</th>
+                <th>작성자 이름</th>
+                <th>별 점</th>
+                <th>한줄평</th>
+                <th>작성날짜</th>
+                <th>식당번호</th>
+            </tr>
+        </thead>
+        <tbody id="contacts">
+            <tr v-for="s in filtered">
+                <td>{{s.num}}</td>
+                <td>{{s.name}}</td>
+                <td>{{s.star}}</td>
+                <td>{{s.review}}</td>
+                <td>{{s.writeday}}</td>
+                <td>{{s.resnum}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+
+    let model = {
+        star: "",
+        review: []
+    }
+
+    new Vue({
+        el: "#example",
+        data: model,
+        computed: {
+            filtered: function () {
+                let sname = this.star;
+                return this.star.filter((item) => {
+                    if (item.review.includes(sname)) {
+                        return true;
+                    };
+                })
+            }
+        },//별점으로 구분해보자
+        mounted : function(){
+            axios.get("http://localhost/BABZIP3/controller?command=clist")
+                .then(response => {
+                    this.review =response.data
+                    console.log(this.review);
+                })
+                .catch(error => console.log(error));
+            }
+    });
+
+</script>
+</body>
+
+</html>
