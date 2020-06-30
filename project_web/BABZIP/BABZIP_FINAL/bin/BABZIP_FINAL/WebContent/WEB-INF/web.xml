@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>step11_miniProject</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  <!-- Spring 기반의 한글 인코딩 설정
+  		*.do 에 의한 요청 진행 시에만 spring이 관여
+  		
+  		*.do로 요청 시 이 모든 요청에 한해서는 다음과 같은 설정으로 인코딩 처리함을 의미
+  		CharacterEncodingFilter 라는 인코딩 클래스가 
+  		encoding이라는 변수명으로 utf-8 값을 획득해서 인코딩 처리하는 로직
+  		setCharacterEncoding() 메소드 - post 방식 위주의 처리
+  		
+  		  -->
+  
+  <filter>
+  	<filter-name>encodingFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<!-- 한국어 인코딩 정보 설정 -->
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  	
+  </filter>
+ 
+ <filter-mapping>
+ 	<filter-name>encodingFilter</filter-name>
+	<url-pattern>*.do</url-pattern>	<!--요청 url--> 
+ </filter-mapping> 
+ 
+  <servlet>
+    <servlet-name>sw</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sw</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+</web-app>

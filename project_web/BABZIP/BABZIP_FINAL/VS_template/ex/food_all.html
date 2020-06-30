@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/index.css"
+    
+</head>
+<body>
+    <h2>맛집 찾기</h2>
+    <hr>
+    <button>지역</button>
+    <button>음식</button>
+    <hr>
+    <div id="app">
+        
+            
+        <table>
+            <th>상호명</th>
+            <th>위치</th>
+            <th>분류</th>
+            <th>영업시간</th>
+            <th>사진</th>
+            <tr v-for="list in data" >
+                <td>{{list.name}}</td>
+                <td>{{list.addr}}</td>
+                <td>{{list.type}}</td>
+                <td>{{list.open + '~' + list.close}}</td>
+                <td><img :src="list.img" style="width: 200px;"></td>
+            </tr>
+            
+        </table>
+            
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el : "#app",
+            data: {
+                
+                data: [],
+                review:''               
+               
+            },            
+            mounted : function(){
+                axios.get("http://localhost/BABZIP3/controller?command=flist")
+                .then(response => {
+                    this.data =response.data;
+                    console.log(this.data[0]);
+                    
+                })
+                .catch(error => console.log(error));
+            }
+
+        });
+    </script>
+</body>
+</html>

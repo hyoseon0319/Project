@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app" class="container">
+        <h1>리뷰 검색</h1>
+        <div class="form-group">
+            <label for="query">별점을 검색하세요</label>
+            <input type="text" v-model="query" class="form-control">
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="cus in search">
+                {{ cus.star }}  {{ cus.review }}
+            </li>
+        </ul>
+        <pre>{{ $data }}</pre>
+        <button @click="getData">모든출력</button>
+    </div>
+
+	<form>
+	<input type="text" name="star">
+	<input type="password" name="pwd">
+	<input type="submit" name="검색">	
+	</form>
+
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                customer: [
+                    {
+                        review: '맛나',
+                        star: '1'
+                    },
+                    {
+                        review: '존맛탱',
+                        star: '4'
+                    }
+                ],
+                query: ''
+            },
+            methods: {
+                cusBy: function (star) {
+                    return this.customer.filter(function (cus) {
+                        return cus.star === star
+                    });
+                },
+                getData: function () {
+                    axios.get("http://localhost/BABZIP/controller?command=list")
+                        .then(function (response) {
+                            this.query = response.data;
+                            console.log('---' + this.data);
+                        });
+                },
+                
+                deleteData : function () {
+                    axios.get("http://localhost/BABZIP/controller?command=delete&num="+this.num+"&pwd="+this.pwd)
+                    .then(function (response) {
+                    	this.departments = response.data;
+                    }
+                    this.num = '';
+                    this.pwd = '';
+                  },
+            },
+            computed: {
+                search: function () {
+                    var query = this.query
+                    return this.customer.filter(function (cus) {
+                        return cus.star.includes(query)
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

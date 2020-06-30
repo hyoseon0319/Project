@@ -1,0 +1,23 @@
+
+        .list textarea {
+            display: block;
+            min-width: 400px;
+            height: auto;
+            margin: 10px 0;
+        }
+
+        .list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list li {
+            background-color: write;
+            border: 2px solid #ffa114;
+            padding: 5px;
+            margin-bottom: 5px;
+            text-align: left;
+            
+        }
+
+    
